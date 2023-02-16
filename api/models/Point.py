@@ -1,6 +1,6 @@
 from django.db import models
 
-from . import Maps
+from . import Map
 
 
 class Point(models.Model):
