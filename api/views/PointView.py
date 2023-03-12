@@ -1,7 +1,7 @@
 from django.http import Http404
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.views import APIViews
+from rest_framework.views import APIView
 
 from api.models import Point
 from api.serializers import PointSerializer
@@ -23,4 +23,26 @@ class PointList(APIView):
   
   
 class PointDetail(APIView):
-  def 
+  def get_object(self, pk):
+    try:
+      return Point.objects.get(pk=pk)
+    except Point.DoesNotExist:
+      raise Http404
+
+  def get(self, request, pk, format=None):
+    point = self.get_object(pk)
+    serializer = PointSerializer(point)
+    return Response(serializer.data)
+
+  def put(self, request, pk, format=None):
+    point = self.get_object(pk)
+    serializer = PointSerializer(point, data=request.data)
+    if serializer.is_valid():
+      serializer.save()
+      return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+  def delete(self, request, pk, format=None):
+    point = self.get_object(pk)
+    point.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT)

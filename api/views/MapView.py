@@ -9,7 +9,7 @@ from api.serializers import MapSerializer
 class MapList(APIView):
   def get(self, request, format=None):
     # ajouter filtre utilisateur
-    maps = Maps.objects.all()
+    maps = Map.objects.all()
     serializer = MapSerializer(maps, many=True)
     return Response(serializer.data)
   
@@ -18,7 +18,7 @@ class MapList(APIView):
     if serializer.is_valid():
       serializer.save()
       return Response(serializer.data, status=status.HTTP_201_CREATED)
-   return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class MapDetail(APIView):
