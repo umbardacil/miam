@@ -8,6 +8,7 @@ My girlfriend and I were sharing a lot of restaurant adresses where we wanted to
 
 # Installation
 
-TBD
+`pip install -r requirements.txt`
+
 
 (web with Django, and mobile for android)
